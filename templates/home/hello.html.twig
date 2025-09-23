@@ -4,4 +4,44 @@
 
 {% block body %}
 <h1>Hello  {{ name }} </h1>
+
+{% set pi=3.14 %}
+{% set t="Bonjoiur " ~ nameDB     %}
+{% set parag %}
+<p>repeated info...</p>
+{% endset %}
+{{ pi }}
+<p>
+{{ t }}
+</p>
+{{ parag }}
+{{ parag }}
+{{ parag }}
+{{ parag }}
+{% set t1 = {'nom': 'Ali','age': 55} %} 
+<p>
+<b>Nom : </b>
+{{ t1['nom'] }}<br/>
+<b>Age : </b>
+{{ t1['age']}}
+</p>
+
+{% if products is empty%}
+<p>No products found.</p>
+{% else %}
+<h2>Product List</h2>
+List....
+{% endif %}
+<h2>Product List</h2>
+{% for product in products %}
+<p><b>Name : </b> {{  product.name | upper | lower }} </p>
+<p><b>Price : </b> {{  product.price }} </p>
+<hr>
+{% else %}
+<p> P empty... </p>
+{% endfor %}
+
+<a href="{{path('app_home')}}">Vers Home</a>
+{{ dump(products)}}
+
 {% endblock %}

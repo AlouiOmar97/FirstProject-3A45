@@ -33,6 +33,18 @@ final class HomeController extends AbstractController
 
     #[Route('/hello/name/{na}', name:'app_home_hello_na')]
     public function helloNa($na){
-        return $this->render('home/hello.html.twig', [ 'name' => $na ]);
+        $nameDB="mohamed";
+        $products=[['id'=> 1, 'name'=>"p1", "price"=> 50], 
+                   ['id'=> 2, 'name'=>"p2", "price"=> 30]
+                  ];
+        //dd($nameDB);
+        //dump($products);
+        //die("DIEEEE");
+
+        return $this->render('home/hello.html.twig', 
+        [ 'name' => $na, 
+        "nameDB" => $nameDB,
+        "products" => $products
+    ]);
     }
 }
