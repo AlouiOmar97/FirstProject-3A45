@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Author;
+use App\Form\AddEditAuthorType;
 use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -72,6 +74,41 @@ final class AuthorController extends AbstractController
         $em->persist($author);
         $em->flush();
         dd($author);
+    }
+
+    #[Route('/author/create', name:'app_author_create')]
+    public function createAuthor(Request $request,EntityManagerInterface $em): Response{
+        $author= new Author();
+        //$author->setUsername('New Author');
+        $form = $this->createForm(AddEditAuthorType::class, $author);
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+            $em->persist($author);
+            $em->flush();
+            return $this->redirectToRoute('app_author_list');
+
+        }
+        return $this->render('author/form.html.twig',[
+            'title' => 'Create Author',
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/author/update/{id}', name:'app_author_update')]
+    public function updateAuthor($id, Request $request,EntityManagerInterface $em, AuthorRepository $authorRepository): Response{
+        $author= $authorRepository->find($id);
+        $form = $this->createForm(AddEditAuthorType::class, $author);
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+            //$em->persist($author);
+            $em->flush();
+            return $this->redirectToRoute('app_author_list');
+            
+        }
+        return $this->render('author/form.html.twig',[
+            'title' => 'Update Author',
+            'form' => $form
+        ]);
     }
 
     #[Route('/author/edit/{id}', name:'app_author_edit')]
