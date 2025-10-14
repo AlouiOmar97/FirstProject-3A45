@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Book List{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Book List</h1>
+    <a href="{{path('app_book_create')}}">Create Book</a>
+    {% for book in books %}
+        <div>
+        <img src="{{ book.author.picture }}" alt="{{ book.author.username }}">
+        <p><b>Title : </b> {{ book.title | upper }} </p>
+        <p><b>Author : </b> {{ book.author.username }} </p>
+        <p><b>Publication Date : </b> {{ book.publicationDate | date("d-m-Y") }} </p>
+        <p><b>Enabled : </b> {{ book.enabled ? 'Yes': 'No' }} </p>
+        <a href="{{ path('app_book_details', { 'id': book.id }) }}">Details</a>
+        <a href="{{ path('app_book_update', { 'id': book.id }) }}">Update</a>
+        <a href="{{ path('app_book_delete', { 'id': book.id }) }}">Delete</a>
+        </div><hr>
+    {% endfor %}
+</div>
+{% endblock %}

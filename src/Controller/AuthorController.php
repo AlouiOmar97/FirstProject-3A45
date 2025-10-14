@@ -120,10 +120,12 @@ final class AuthorController extends AbstractController
         dd($author);
     }
     #[Route('/author/delete/{id}', name:'app_author_delete')]
-    public function deleteAuthor($id, EntityManagerInterface $em, AuthorRepository $authorRepository): void{
+    public function deleteAuthor($id, EntityManagerInterface $em, AuthorRepository $authorRepository): Response{
         $author = $authorRepository->find($id);
         $em->remove($author);
         $em->flush();
-        dd("author deleted");
+        //dd("author deleted");
+        return $this->redirectToRoute("app_author_list");
+
     }
 }
