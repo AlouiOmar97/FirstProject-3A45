@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Author;
 use App\Form\AddEditAuthorType;
 use App\Repository\AuthorRepository;
+use App\Service\AuthorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -127,5 +128,23 @@ final class AuthorController extends AbstractController
         //dd("author deleted");
         return $this->redirectToRoute("app_author_list");
 
+    }
+
+    #[Route("/author/search/email/{email}", name:"app_author_search_email")]
+    public function searchAuthorByEmail($email, AuthorRepository $authorRepository): Response{
+        $authors= $authorRepository->findAuthorsByEmail($email);
+        dd($authors);
+    }
+
+    #[Route("/author/search/nbbooks/{nbbooks}", name:"app_author_search_nbbooks")]
+    public function searchAuthorByNbBooks($nbbooks, AuthorRepository $authorRepository): Response{
+        $authors= $authorRepository->findAuthorsByNbBooks($nbbooks);
+        dd($authors);
+    }
+
+    #[Route("/author/service", name:"app_author_service")]
+    public function getAuthorBySerice($nbbooks, AuthorService $authorService, AuthorRepository $authorRepository): Response{
+        $authors= $authorService->getModifiedAuthors(3, $authorRepository);
+        dd($authors);
     }
 }

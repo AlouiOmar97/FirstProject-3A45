@@ -80,4 +80,11 @@ final class BookController extends AbstractController
         $em->flush();
         return $this->redirectToRoute("app_book_list");
     }
+
+    #[Route("/book/search/{username}", name:"app_book_search_username")]
+    public function searchBook($username, BookRepository $bookRepository){
+       
+        $books = $bookRepository->findBooksByAuthorUsername($username);
+        dd($books);
+    }
 }
