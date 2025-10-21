@@ -143,7 +143,7 @@ final class AuthorController extends AbstractController
     }
 
     #[Route("/author/service", name:"app_author_service")]
-    public function getAuthorBySerice($nbbooks, AuthorService $authorService, AuthorRepository $authorRepository): Response{
+    public function getAuthorBySerice(AuthorService $authorService, AuthorRepository $authorRepository): Response{
         $authors= $authorService->getModifiedAuthors(3, $authorRepository);
         dd($authors);
     }
